@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Todo App</h1>
-  <img src="assets/logo.png" width="200">
+  <img src="assets/logo.png" width="300">
   <h2>ใช้งานฟรี !</h2>
 </div>
 
