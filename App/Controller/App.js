@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  count_total();
   if (!checkCookieExists("username")) {
     $(".main-content").hide();
     $("#loginModal").modal("show");
@@ -341,4 +342,5 @@ $(document).ready(function () {
       }
     });
   });
+  
 });

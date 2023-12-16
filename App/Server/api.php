@@ -133,6 +133,12 @@
         echo json_encode(["message" => "Error Truncate Table"]);
       }
     }
+    if ($type == 'count') {
+        $selectQuery = "SELECT COUNT(*) AS total FROM todo_list WHERE is_delete = 0";
+        $result = $conn->query($selectQuery);
+        $row = $result->fetchArray();
+        echo json_encode(["message" => "success", "result" => $row['total']]);
+    }
     $conn->close();
   }
 ?>

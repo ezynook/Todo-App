@@ -110,3 +110,24 @@ function fetch_table() {
     }
   });
 }
+function count_total() {
+  $.ajax({
+    type: "post",
+    url: "Server/api.php",
+    data: {type: 'count'},
+    dataType: "json",
+    success: function (response) {
+      if (response.message == "success") {
+        $("#count_todo").html(`
+          <button type="button" class="btn btn-light position-relative">
+          Total Task
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+            ${response.result}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </button>
+        `);
+      }
+    }
+  });
+}
