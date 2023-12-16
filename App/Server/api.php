@@ -12,11 +12,11 @@
     if ($type == 'save') {
       $query = $conn->exec("
         INSERT INTO
-          todo_list (todo, status, username, datetime)
+          todo_list (todo, status, username, datetime, is_delete)
         VALUES
-          ('{$_POST['todo']}', 0, '{$_POST['username']}', '{$dt}')
+          ('{$_POST['todo']}', 0, '{$_POST['username']}', '{$dt}', 0)
       ");
-      $selectQuery = "SELECT * FROM todo_list WHERE username = '{$_POST['username']}' ORDER BY `status` ASC";
+      $selectQuery = "SELECT * FROM todo_list WHERE username = '{$_POST['username']}' AND is_delete = 0 ORDER BY `status` ASC";
       $result = $conn->query($selectQuery);
       $data = [];
       while ($row = $result->fetchArray()) {
@@ -35,7 +35,7 @@
       }
     }
     if ($type == 'get') {
-      $selectQuery = "SELECT * FROM todo_list WHERE username = '{$_POST['username']}' ORDER BY `status` ASC";
+      $selectQuery = "SELECT * FROM todo_list WHERE username = '{$_POST['username']}' AND is_delete = 0 ORDER BY `status` ASC";
       $result = $conn->query($selectQuery);
       $data = [];
       if ($result) {
@@ -60,7 +60,7 @@
       $conn->close();
     }
     if ($type == 'delete') {
-      $query = $conn->exec("DELETE FROM todo_list WHERE id=".$_POST['id']);
+      $query = $conn->exec("UPDATE todo_list SET is_delete = 1 WHERE id=".$_POST['id']);
       if ($query) {
         echo json_encode(['message' => 'success']);
         $conn->close();
@@ -74,7 +74,7 @@
       }
     }
     if ($type == 'mark-read') {
-      $result = $conn->query("SELECT `status` FROM todo_list WHERE id = ".$_POST['id']);
+      $result = $conn->query("SELECT `status` FROM todo_list WHERE id = '{$_POST['id']}' AND is_delete = 0");
       $row = $result->fetchArray();
       if ($row['status'] == 0) {
         $query = $conn->exec("UPDATE todo_list SET `status` = 1, `datetime` = '$dt' WHERE id=".$_POST['id']);
@@ -125,14 +125,10 @@
       $conn->close();
     }
     if ($type == 'truncate') {
-      $q1 = $conn->exec("DELETE FROM todo_list");
-      $q2 = $conn->exec("DELETE FROM sqlite_sequence WHERE name='todo_list'");
+      $q1 = $conn->exec("UPDATE todo_list SET is_delete = 1");
+      // $q2 = $conn->exec("DELETE FROM sqlite_sequence WHERE name='todo_list'");
       if ($q1) {
-        if ($q2) {
-          echo json_encode(["message" => "success"]);
-        } else {
-          echo json_encode(["message" => "Error Reset AI Table"]);
-        }
+        echo json_encode(["message" => "success"]);
       } else {
         echo json_encode(["message" => "Error Truncate Table"]);
       }
