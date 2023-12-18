@@ -77,9 +77,9 @@
       $result = $conn->query("SELECT `status` FROM todo_list WHERE id = '{$_POST['id']}' AND is_delete = 0");
       $row = $result->fetchArray();
       if ($row['status'] == 0) {
-        $query = $conn->exec("UPDATE todo_list SET `status` = 1, `datetime` = '$dt' WHERE id=".$_POST['id']);
+        $query = $conn->exec("UPDATE todo_list SET `status` = 1 WHERE id=".$_POST['id']);
       } else {
-        $query = $conn->exec("UPDATE todo_list SET `status` = 0, `datetime` = '$dt' WHERE id=".$_POST['id']);
+        $query = $conn->exec("UPDATE todo_list SET `status` = 0 WHERE id=".$_POST['id']);
       }
       if ($query) {
         echo json_encode([
