@@ -104,6 +104,8 @@ $(document).ready(function () {
             var html = "";
             var hash = "";
             var hash2 = "";
+            var edit = "";
+            var del = "";
             $.each(response.result, function (k, v) { 
               if (v.status == 1) {
                 hash = "text-decoration-line-through";
@@ -116,39 +118,39 @@ $(document).ready(function () {
                 edit = null;
                 del = null;
               }
-               html += `
-                <tr>
-                  <td>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" role="switch" id="mark-read" value="${v.id}" ${hash2}>
-                    </div>
-                  </td>
-                  <td id="txttodo-${v.id}" class="txt-edit-${v.id} ${hash}">${v.todo}</td>
-                  <td align="right">
-                  <span class="badge bg-primary">${v.datetime}</span>
+              html += `
+              <tr>
+                <td>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="mark-read" value="${v.id}" ${hash2}>
+                  </div>
+                </td>
+                <td id="txttodo-${v.id}" class="txt-edit-${v.id} ${hash}">${v.todo}</td>
+                <td align="right">
+                <span class="badge bg-primary">${v.datetime}</span>
+                <button
+                    type="button"
+                    data-id=${v.id}
+                    data-todo="${v.todo}"
+                    id="btn-edit"
+                    ${edit}
+                    class="btn btn-outline-warning btn-sm btn-edit-${v.id}">
+                    <i class="fa-solid fa-pen"></i>
+                    Edit
+                </button>
                   <button
                       type="button"
                       data-id=${v.id}
                       data-todo="${v.todo}"
-                      id="btn-edit"
-                      ${edit}
-                      class="btn btn-outline-warning btn-sm btn-edit-${v.id}">
-                      <i class="fa-solid fa-pen"></i>
-                      Edit
+                      id="btn-delete"
+                      ${del}
+                      class="btn btn-outline-danger btn-sm btn-delete-${v.id}">
+                      <i class="fa-solid fa-trash-can"></i>
+                      Delete
                   </button>
-                    <button
-                        type="button"
-                        data-id=${v.id}
-                        data-todo="${v.todo}"
-                        id="btn-delete"
-                        ${del}
-                        class="btn btn-outline-danger btn-sm btn-delete-${v.id}">
-                        <i class="fa-solid fa-trash-can"></i>
-                        Delete
-                    </button>
-                  </td>
-              </tr>
-               `;
+                </td>
+            </tr>
+             `;
             });
             $("#mytable").css("display", "table");
             $("#todo-list").html("");
@@ -157,6 +159,7 @@ $(document).ready(function () {
             $("#todo").focus();
             $.notify(`Saved Successfully`, 'success');
             $(".remove-all").css("display", "table");
+            fetch_table(); //New Fetching
           }
         }
       });
