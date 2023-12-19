@@ -11,7 +11,13 @@ RUN apt-get install -y libbz2-dev sqlite3 libsqlite3-dev \
 
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
-COPY ./App/ .
+HEALTHCHECK --interval=10s \
+            --timeout=15s \
+            --start-period=5s \
+            --retries=3 \
+            CMD [ "netstat -lnpt | grep 80" ] || exit 1
+
+# COPY ./App/ .
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql pdo_sqlite \
     && a2enmod rewrite \

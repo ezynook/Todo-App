@@ -33,7 +33,7 @@ function getCookieValue(cookieName) {
 }
 function fetch_table() {
   if (!checkCookieExists("username")) {
-    Swal.fire("Please Login !", "Login Now !", "error");
+    $.notify("Please Login !", "error");
     return false;
   }
   $.ajax({
@@ -57,7 +57,7 @@ function fetch_table() {
         } else {
           $.each(response.result, function (k, v) { 
             if (v.status == 1) {
-              hash = "text-decoration-line-through";
+              hash = "text-decoration-line-through text-success";
               hash2 = "checked";
               edit = 'disabled="disabled"';
               del = 'disabled="disabled"';
@@ -67,6 +67,8 @@ function fetch_table() {
               edit = null;
               del = null;
             }
+            var momentDate = moment(v.datetime, "YYYY-MM-DD HH:mm:ss");
+            var formattedDate = momentDate.format("DD/MM/YYYY HH:mm:ss");
              html += `
               <tr>
                 <td>
@@ -76,7 +78,7 @@ function fetch_table() {
                 </td>
                 <td id="txttodo-${v.id}" class="txt-edit-${v.id} ${hash}">${v.todo}</td>
                 <td align="right">
-                <span class="badge bg-primary">${v.datetime}</span>
+                <button class="btn btn-sm btn-outline-primary txtdt">${formattedDate}</button>
                 <button
                     type="button"
                     data-id=${v.id}

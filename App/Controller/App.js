@@ -4,13 +4,25 @@ $(document).ready(function () {
     $(".main-content").hide();
     $("#loginModal").modal("show");
     $('#btn-login').attr("disabled", false);
-    $('#btn-login').text("Submit");
+    $('#btn-login').html(`<i class="fa-solid fa-right-to-bracket"></i> Login`);
     $("#username").focus();
   } else {
-    $("#title-header").text("Todo List (" + getCookieValue("username") + ")");
+    $("#my_login").text(`Todo List Loged in: (${getCookieValue("username")})`);
     $(".main-content").show();
   }
-  $("#btn-login").click(function() {
+  $("#btn-login").click(function(e) {
+    if ($("#username").val().length == 0) {
+      Swal.fire("Username is empty", "Please insert username", "error");
+      $("#username").focus();
+      e.preventDefault();
+      return;
+    }
+    if ($("#password").val().length == 0) {
+      Swal.fire("Password is empty", "Please insert password", "error");
+      $("#password").focus();
+      e.preventDefault();
+      return;
+    }
     $(this).attr("disabled", true);
     $(this).text("Wait ...");
     var params = {
@@ -47,7 +59,7 @@ $(document).ready(function () {
           $("#username").val("");
           $("#password").val("");
           $("#btn-login").attr("disabled", false);
-          $("#btn-login").text("Submit");
+          $("#btn-login").html(`<i class="fa-solid fa-right-to-bracket"></i> Login`);
           $(".main-content").hide();
         }
       }
@@ -67,7 +79,7 @@ $(document).ready(function () {
         deleteCookie("username");
         $("#title-header").html(`Todo List <a href="#" class="text-white" data-bs-toggle="modal" data-bs-target="#loginModal">(Please Login now!)</a>`);
         $('#btn-login').attr("disabled", false);
-        $('#btn-login').text("Submit");
+        $('#btn-login').html(`<i class="fa-solid fa-right-to-bracket"></i> Login`);
         $(".main-content").hide();
         $("#loginModal").modal("show");
       }
@@ -82,7 +94,7 @@ $(document).ready(function () {
   $('#todo').keydown(function(event) {
     if (event.which === 13) {
       if (!checkCookieExists("username")) {
-        Swal.fire("Please Login !", "Login Now !", "error");
+        $.notify("Please Login !", "error");
         return false;
       }
       if ( $(this).val().length === 0 ) {
@@ -108,7 +120,7 @@ $(document).ready(function () {
             var del = "";
             $.each(response.result, function (k, v) { 
               if (v.status == 1) {
-                hash = "text-decoration-line-through";
+                hash = "text-decoration-line-through text-success";
                 hash2 = "checked";
                 edit = 'disabled="disabled"';
                 del = 'disabled="disabled"';
@@ -118,6 +130,8 @@ $(document).ready(function () {
                 edit = null;
                 del = null;
               }
+              var momentDate = moment(v.datetime, "YYYY-MM-DD HH:mm:ss");
+              var formattedDate = momentDate.format("DD/MM/YYYY HH:mm:ss");
               html += `
               <tr>
                 <td>
@@ -127,7 +141,7 @@ $(document).ready(function () {
                 </td>
                 <td id="txttodo-${v.id}" class="txt-edit-${v.id} ${hash}">${v.todo}</td>
                 <td align="right">
-                <span class="badge bg-primary">${v.datetime}</span>
+                <button class="btn btn-sm btn-outline-primary txtdt">${formattedDate}</button>
                 <button
                     type="button"
                     data-id=${v.id}
@@ -156,7 +170,7 @@ $(document).ready(function () {
             $("#todo-list").html("");
             $("#todo-list").append(html);
             $("#todo").val('');
-            $("#todo").focus();
+            $("#todo").addClass("is-invalid");
             $.notify(`Saved Successfully`, 'success');
             $(".remove-all").css("display", "table");
             fetch_table(); //New Fetching
@@ -345,5 +359,77 @@ $(document).ready(function () {
       }
     });
   });
-  
+  $("#todo").focusin(function (e) { 
+    e.preventDefault();
+    $(this).addClass("is-invalid");
+  });
+  $("#todo").keyup(function (e) { 
+    e.preventDefault();
+    if ( $(this).val().length > 0 ) {
+      $(this).removeClass("is-invalid");
+      $(this).addClass("is-valid");
+    } else {
+      $(this).removeClass("is-valid");
+      $(this).addClass("is-invalid");
+    }
+  });
+  //Add User
+  $("#add_username").focusin(function (e) { 
+    e.preventDefault();
+    $(this).addClass("is-invalid");
+  });
+  $("#add_username").keyup(function (e) { 
+    e.preventDefault();
+    if ( $(this).val().length > 0 ) {
+      $(this).removeClass("is-invalid");
+      $(this).addClass("is-valid");
+    } else {
+      $(this).removeClass("is-valid");
+      $(this).addClass("is-invalid");
+    }
+  });
+  $("#add_password").focusin(function (e) { 
+    e.preventDefault();
+    $(this).addClass("is-invalid");
+  });
+  $("#add_password").keyup(function (e) { 
+    e.preventDefault();
+    if ( $(this).val().length > 0 ) {
+      $(this).removeClass("is-invalid");
+      $(this).addClass("is-valid");
+    } else {
+      $(this).removeClass("is-valid");
+      $(this).addClass("is-invalid");
+    }
+  });
+  //Login
+  $("#username").focusin(function (e) { 
+    e.preventDefault();
+    $(this).addClass("is-invalid");
+  });
+  $("#username").keyup(function (e) { 
+    e.preventDefault();
+    if ( $(this).val().length > 0 ) {
+      $(this).removeClass("is-invalid");
+      $(this).addClass("is-valid");
+    } else {
+      $(this).removeClass("is-valid");
+      $(this).addClass("is-invalid");
+    }
+  });
+  $("#password").focusin(function (e) { 
+    e.preventDefault();
+    $(this).addClass("is-invalid");
+  });
+  $("#password").keyup(function (e) { 
+    e.preventDefault();
+    if ( $(this).val().length > 0 ) {
+      $(this).removeClass("is-invalid");
+      $(this).addClass("is-valid");
+    } else {
+      $(this).removeClass("is-valid");
+      $(this).addClass("is-invalid");
+    }
+  });
+
 });
