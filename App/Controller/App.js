@@ -361,7 +361,11 @@ $(document).ready(function () {
   });
   $("#todo").focusin(function (e) { 
     e.preventDefault();
-    $(this).addClass("is-invalid");
+    if ( $(this).val().length === 0 ) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).addClass("is-valid");
+    }
   });
   $("#todo").keyup(function (e) { 
     e.preventDefault();
@@ -372,6 +376,10 @@ $(document).ready(function () {
       $(this).removeClass("is-valid");
       $(this).addClass("is-invalid");
     }
+  });
+  $("#todo").blur(function (e) { 
+    e.preventDefault();
+    $(this).removeClass("is-invalid");
   });
   //Add User
   $("#add_username").focusin(function (e) { 
