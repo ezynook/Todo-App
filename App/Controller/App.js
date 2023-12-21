@@ -334,12 +334,15 @@ $(document).ready(function () {
       confirmButtonText: "Delete",
       denyButtonText: `Don't Delete`
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
+        var params = {
+          username: getCookieValue("username"),
+          type: 'truncate'
+        }
         $.ajax({
           type: "post",
           url: "../Server/api.php",
-          data: {type: 'truncate'},
+          data: params,
           dataType: "json",
           success: function (response) {
             if (response.message == 'success') {
