@@ -89,7 +89,7 @@ function fetch_table() {
                     <i class="fa-solid fa-pen"></i>
                     Edit
                 </button>
-                  <button
+                <button
                       type="button"
                       data-id=${v.id}
                       data-todo="${v.todo}"
@@ -122,12 +122,12 @@ function count_total() {
       if (response.message == "success") {
         $("#count_todo").html(`
           <button type="button" class="btn btn-light position-relative">
-          Total Task
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
-            ${response.result}
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </button>
+            Total Task
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+              ${response.result}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </button>
         `);
       }
     }

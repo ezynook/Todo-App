@@ -3,8 +3,8 @@ services:
 
   todo:
     build: .
-    container_name: api
-    restart: always
+    container_name: todo
+    restart: unless-stopped
     ports:
       - 80:80
     volumes:

@@ -11,9 +11,8 @@ RUN apt-get install -y libbz2-dev sqlite3 libsqlite3-dev \
 
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
-HEALTHCHECK --interval=10s \
-            --timeout=15s \
-            --start-period=5s \
+HEALTHCHECK --interval=30s \
+            --timeout=30s \
             --retries=3 \
             CMD [ "netstat -lnpt | grep 80" ] || exit 1
 
