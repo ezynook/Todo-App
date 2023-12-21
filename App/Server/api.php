@@ -126,7 +126,6 @@
     }
     if ($type == 'truncate') {
       $q1 = $conn->exec("UPDATE todo_list SET is_delete = 1 WHERE username = '{$_POST['username']}'");
-      // $q2 = $conn->exec("DELETE FROM sqlite_sequence WHERE name='todo_list'");
       if ($q1) {
         echo json_encode(["message" => "success"]);
       } else {
