@@ -1,5 +1,8 @@
 <?php
   $conn = new SQLite3('todo.db');
+  if (!$conn) {
+    echo "Error";
+  }
   date_default_timezone_set("Asia/Bangkok");
   $dt = date("Y-m-d H:i:s");
   if (!$conn) {
