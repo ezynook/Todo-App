@@ -108,7 +108,7 @@ $(document).ready(function () {
       };
       $.ajax({
         type: "post",
-        url: "http://localhost/todo/App/Server/api.php",
+        url: "../Server/api.php",
         data: params,
         dataType: "json",
         success: function (response) {
