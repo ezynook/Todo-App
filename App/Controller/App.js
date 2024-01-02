@@ -1,5 +1,6 @@
 $(document).ready(function () {
   count_total();
+  checkTheme();
   if (!checkCookieExists("username")) {
     $(".main-content").hide();
     $("#loginModal").modal("show");
@@ -440,6 +441,26 @@ $(document).ready(function () {
     } else {
       $(this).removeClass("is-valid");
       $(this).addClass("is-invalid");
+    }
+  });
+
+  $("#theme").click(function() {
+    if ($("html").attr("data-bs-theme") != 'dark') {
+        $("#theme").removeClass("btn-light");
+        $("#myul").removeClass("bg-white text-dark");
+        $("#theme").addClass("btn-dark");
+        $("#theme").html(`<i class="fa-solid fa-moon"></i>`);
+        $("#myul").addClass("bg-dark text-white");
+        $("html").attr("data-bs-theme", "dark");
+        localStorage.setItem("todo-theme", "dark");
+    } else {
+        $("#theme").removeClass("btn-dark");
+        $("#theme").addClass("btn-light");
+        $("#myul").removeClass("bg-dark text-white");
+        $("#myul").addClass("bg-white text-dark");
+        $("#theme").html(`<i class="fa-regular fa-moon"></i>`);
+        $("html").removeAttr("data-bs-theme");
+        localStorage.setItem("todo-theme", "light");
     }
   });
 

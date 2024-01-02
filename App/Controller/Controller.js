@@ -133,3 +133,22 @@ function count_total() {
     }
   });
 }
+
+function checkTheme(){
+  let theme = localStorage.getItem("todo-theme");
+  if (theme == 'dark') {
+      $("#theme").removeClass("btn-light");
+      $("#theme").addClass("btn-dark");
+      $("#theme").html(`<i class="fa-solid fa-moon"></i>`);
+      $("#myul").addClass("bg-dark text-white");
+      $("html").attr("data-bs-theme", "dark");
+      localStorage.setItem("todo-theme", "dark");
+  } else {
+      $("#theme").removeClass("btn-dark");
+      $("#theme").addClass("btn-light");
+      $("#myul").addClass("bg-white text-dark");
+      $("#theme").html(`<i class="fa-regular fa-moon"></i>`);
+      $("html").removeAttr("data-bs-theme");
+      localStorage.setItem("todo-theme", "light");
+  }
+}
