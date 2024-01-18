@@ -44,6 +44,9 @@
       line-height: 0px;
       margin: 0px 8px;
     }
+    .main-content {
+      display: none;
+    }
   </style>
   <title id="my_login">Todo</title>
 </head>
@@ -54,34 +57,36 @@
         class="fa-regular fa-moon"></i></a>
   </div>
   <div class="container mt-3 main-content">
-    <div class="card">
-      <div class="card-header text-white" style="background-color: #154360;" id="title-header">
-        <h4><i class="fa-solid fa-list-check"></i> Todo List</h4>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <div class="form-floating mb-3">
-              <input type="todo" class="form-control" id="todo" placeholder="Todo" width="100%" autofocus>
-              <label for="todo"><i class="fa-solid fa-pen"></i> Enter Your Todo</label>
+    <section class="main-content">
+      <div class="card">
+        <div class="card-header text-white" style="background-color: #154360;" id="title-header">
+          <h4><i class="fa-solid fa-list-check"></i> Todo List</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="form-floating mb-3">
+                <input type="todo" class="form-control" id="todo" placeholder="Todo" width="100%" autofocus>
+                <label for="todo"><i class="fa-solid fa-pen"></i> Enter Your Todo</label>
+              </div>
             </div>
           </div>
+          <p id="edit-message"></p>
+          <div class="hr-section">Todo List</div>
+          <div class="form-check form-switch remove-all" style="display: none;">
+            <input class="form-check-input" type="checkbox" role="switch" id="mark-delete-all" value="1">
+            <label for="" class="mb-2">ลบข้อมูลทั้งหมด</label>
+          </div>
+          <table style="display: none;" id="mytable" class="table table-responsive table-sm table-hover table-striped">
+            <tbody id="todo-list"></tbody>
+          </table>
         </div>
-        <p id="edit-message"></p>
-        <div class="hr-section">Todo List</div>
-        <div class="form-check form-switch remove-all" style="display: none;">
-          <input class="form-check-input" type="checkbox" role="switch" id="mark-delete-all" value="1">
-          <label for="" class="mb-2">ลบข้อมูลทั้งหมด</label>
+        <div class="card-footer" align="right">
+          Developed By <a href="https://github.com/ezynook" class="text-dark" style="text-decoration: none;"
+            target="_blank"><span class="badge bg-secondary">Pasit Y.</span></a>
         </div>
-        <table style="display: none;" id="mytable" class="table table-responsive table-sm table-hover table-striped">
-          <tbody id="todo-list"></tbody>
-        </table>
       </div>
-      <div class="card-footer" align="right">
-        Developed By <a href="https://github.com/ezynook" class="text-dark" style="text-decoration: none;"
-          target="_blank"><span class="badge bg-secondary">Pasit Y.</span></a>
-      </div>
-    </div>
+    </section>
   </div>
   <!-- Sign-in Modal -->
   <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -161,6 +166,7 @@
   <script src="https://rawgit.com/notifyjs/notifyjs/master/dist/notify.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="./vendor/topbar/topbar.js"></script>
   <script src="./Controller/controller.js"></script>
   <script src="./Controller/App.js"></script>
 </body>

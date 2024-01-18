@@ -1,6 +1,13 @@
+
 $(document).ready(function () {
   count_total();
   checkTheme();
+  resetToDefaults();
+  topbar.show();
+  setTimeout(function () {
+      $('.main-content').fadeIn('slow');
+      topbar.hide();
+  }, 1000);
   if (!checkCookieExists("username")) {
     $(".main-content").hide();
     $("#loginModal").modal("show");
